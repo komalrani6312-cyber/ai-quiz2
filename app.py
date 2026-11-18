@@ -320,7 +320,7 @@ if st.session_state.access_role == "teacher":
 
     teacher_tab = st.container()
     with teacher_tab:
-        minimum_password_length = 12 if get_config_value("APP_ENV").lower() == "production" else 4
+        minimum_password_length = 1
         teacher = st.session_state.teacher_user
 
         if not database_ready:
@@ -359,7 +359,7 @@ if st.session_state.access_role == "teacher":
                         st.rerun()
                     st.error("Username or password is incorrect.")
 
-            st.caption(f"Create your own teacher login. Password minimum: {minimum_password_length} characters.")
+            st.caption("Choose any password length. Password cannot be empty.")
 
         else:
             identity_col, logout_col = st.columns([5, 1])

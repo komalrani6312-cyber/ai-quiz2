@@ -168,7 +168,7 @@ def _password_hash(password, salt=None):
     return f"pbkdf2_sha256${salt_bytes.hex()}${digest.hex()}"
 
 
-def create_teacher(username, password, minimum_password_length=8):
+def create_teacher(username, password, minimum_password_length=1):
     clean_username = username.strip().lower()
     if not re.fullmatch(r"[a-z0-9_.-]{3,40}", clean_username):
         raise ValueError("Username must be 3-40 characters using letters, numbers, dot, dash, or underscore.")

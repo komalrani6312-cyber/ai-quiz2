@@ -82,6 +82,13 @@ class StorageWorkflowTests(unittest.TestCase):
         self.assertIsNotNone(storage.authenticate_teacher(self.teacher["username"], "localpass"))
         self.assertIsNone(storage.authenticate_teacher(self.teacher["username"], "wrongpass"))
 
+    def test_teacher_can_use_short_nonempty_password(self):
+        username = f"short_{uuid.uuid4().hex[:8]}"
+        storage.create_teacher(username, "x")
+        self.assertIsNotNone(storage.authenticate_teacher(username, "x"))
+        with self.assertRaises(ValueError):
+            storage.create_teacher(f"blank_{uuid.uuid4().hex[:8]}", "")
+
     def test_existing_database_migrates_and_keeps_quiz(self):
         temporary_file = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
         database_path = Path(temporary_file.name)
